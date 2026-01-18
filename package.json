@@ -1,0 +1,21 @@
+{
+  "name": "pastryhelper",
+  "version": "1.0.0",
+  "description": "Tool to help with pastry recipes",
+  "homepage": "https://github.com/arosard/PastryHelper#readme",
+  "bugs": {
+    "url": "https://github.com/arosard/PastryHelper/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arosard/PastryHelper.git"
+  },
+  "license": "MIT",
+  "author": "Alexandre Rosard",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Not set up\""
+  },
+  "devDependencies": {}
+}
