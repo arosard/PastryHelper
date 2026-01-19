@@ -8,15 +8,19 @@ import { CategoryLoader, Category } from '../services/category-loader';
 
 @Component({
 	selector: 'app-fridge',
-	imports: [MatTableModule, MatInputModule, MatFormFieldModule, DatePipe],
+	imports: [
+		DatePipe, 
+		MatTableModule, 
+		MatInputModule, 
+		MatFormFieldModule, 
+	],
 	templateUrl: './fridge.html',
 	styleUrl: './fridge.css',
 })
 export class Fridge {
-	foodLoader = inject(FoodLoader);
-	categoryLoader = inject(CategoryLoader);
-	sourceFridgeItems: FridgeItem[] = this.foodLoader.loadFridgeItems();
-	fridgeItems = new MatTableDataSource<FridgeItem>(this.sourceFridgeItems);
+	readonly foodLoader = inject(FoodLoader);
+	readonly categoryLoader = inject(CategoryLoader);
+	fridgeItems = new MatTableDataSource<FridgeItem>(this.foodLoader.loadFridgeItems());
 
 	categories: Category[] = this.categoryLoader.loadCategories();
 
