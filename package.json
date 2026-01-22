@@ -17,5 +17,7 @@
   "scripts": {
     "test": "echo \"Not set up\""
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "electron": "^40.0.0"
+  }
 }

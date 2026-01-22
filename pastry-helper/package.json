@@ -1,13 +1,17 @@
 {
   "name": "pastry-helper",
   "version": "0.0.0",
+  "main": "electron-dist/main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:pastry-helper": "node dist/pastry-helper/server/server.mjs"
+    "serve:ssr:pastry-helper": "node dist/pastry-helper/server/server.mjs",
+    "build:electron": "tsc -p electron/tsconfig.electron.json",
+    "electron": "ng build && npm run build:electron && electron .",
+    "electron:dev": "ng build -c development && npm run build:electron && electron ."
   },
   "prettier": {
     "printWidth": 100,
@@ -45,6 +49,8 @@
     "@angular/material": "^21.1.0",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
+    "electron": "^40.0.0",
+    "electron-builder": "^26.4.0",
     "jsdom": "^27.1.0",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"

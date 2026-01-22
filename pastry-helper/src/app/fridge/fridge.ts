@@ -20,11 +20,23 @@ import { CategoryLoader, Category } from '../services/category-loader';
 export class Fridge {
 	readonly foodLoader = inject(FoodLoader);
 	readonly categoryLoader = inject(CategoryLoader);
-	fridgeItems = new MatTableDataSource<FridgeItem>(this.foodLoader.loadFridgeItems());
-
-	categories: Category[] = this.categoryLoader.loadCategories();
+	fridgeItems = new MatTableDataSource<FridgeItem>([]);
+	categories: Category[] = [];
 
 	displayedColumns: string[] = ['category', 'name', 'quantity', 'expiryDate'];
+
+	ngOnInit() {
+		this.categoryLoader.loadCategories().then((res) => {
+			this.categories = res;
+		}).catch((err) => {
+			console.error("[Fridge.ngOnInit] Error loading categories:", err);
+		});
+		this.foodLoader.loadFridgeItems().then((items) => {
+			this.fridgeItems.data = items;
+		}).catch((err) => {
+			console.error("[Fridge.ngOnInit] Error loading fridge items:", err);
+		});
+	}
 
 	displayQuantity(fridgeItem: FridgeItem): string {
 		const category = this.categories.find(cat => cat.name === fridgeItem.category);

@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import fs from 'fs';
-import os from 'os';
-import path from 'path';
 
 export interface Category {
   name: string;
@@ -12,23 +9,20 @@ export interface Category {
 	providedIn: 'root',
 })
 export class CategoryLoader {
-	private categoriesStorageFilePath = path.join(os.homedir(), '.pastry-helper', 'categories.json');
-
-	constructor() {
-		if (!fs.existsSync(path.dirname(this.categoriesStorageFilePath))) {
-			fs.mkdirSync(path.dirname(this.categoriesStorageFilePath), { recursive: true });
+	async loadCategories(): Promise<Category[]> {
+		if (!window) {
+			console.error("[CategoryLoader.loadCategories] Window object is not available.");
+			return [];
 		}
-		if (!fs.existsSync(this.categoriesStorageFilePath)) {
-			fs.writeFileSync(this.categoriesStorageFilePath, '[]');
-		}
+		let content = await window.categoryApi.loadCategories();
+		return content as Category[];
 	}
 
-	loadCategories(): Category[] {
-		let content = fs.readFileSync(this.categoriesStorageFilePath, 'utf-8');
-		return JSON.parse(content) as Category[];
-	}
-
-	saveCategories(items: Category[]): void {
-		fs.writeFileSync(this.categoriesStorageFilePath, JSON.stringify(items));
+	async saveCategories(items: Category[]): Promise<void> {
+		if (!window) {
+			console.error("[CategoryLoader.saveCategories] Window object is not available.");
+			return;
+		}
+		await window.categoryApi.saveCategories(items);
 	}
 }

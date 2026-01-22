@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import fs from 'fs';
-import os from 'os';
-import path from 'path';
 
 export interface FridgeItem {
 	category: string;
@@ -14,23 +11,22 @@ export interface FridgeItem {
 	providedIn: 'root',
 })
 export class FoodLoader {
-	private foodStorageFilePath = path.join(os.homedir(), '.pastry-helper', 'fridge.json');
-
-	constructor() {
-		if (!fs.existsSync(path.dirname(this.foodStorageFilePath))) {
-			fs.mkdirSync(path.dirname(this.foodStorageFilePath), { recursive: true });
+	async loadFridgeItems(): Promise<FridgeItem[]> {
+		if (!window) {
+			console.error("[FoodLoader.loadFridgeItems] Window object is not available.");
+			return [];
 		}
-		if (!fs.existsSync(this.foodStorageFilePath)) {
-			fs.writeFileSync(this.foodStorageFilePath, '[]');
-		}
+		console.log("Loading fridge items...");
+		let content = await window.foodApi.loadFridgeItems();
+		return content as FridgeItem[];
 	}
 
-	loadFridgeItems(): FridgeItem[] {
-		let content = fs.readFileSync(this.foodStorageFilePath, 'utf-8');
-		return JSON.parse(content) as FridgeItem[];
-	}
-
-	saveFridgeItems(items: FridgeItem[]): void {
-		fs.writeFileSync(this.foodStorageFilePath, JSON.stringify(items));
+	async saveFridgeItems(items: FridgeItem[]): Promise<void> {
+		if (!window) {
+			console.error("[FoodLoader.saveFridgeItems] Window object is not available.");
+			return;
+		}
+		console.log("Saving fridge items...");
+		await window.foodApi.saveFridgeItems(items);
 	}
 }
