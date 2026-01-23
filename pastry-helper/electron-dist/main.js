@@ -69,6 +69,12 @@ function createWindow() {
     const win = new electron_1.BrowserWindow({
         width: 900,
         height: 600,
+        titleBarStyle: 'hidden',
+        ...(process.platform !== 'darwin' ? { titleBarOverlay: {
+                color: 'rgba(0, 0, 0, 0)',
+                symbolColor: '#000000',
+                height: 43,
+            } } : {}),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
         },
