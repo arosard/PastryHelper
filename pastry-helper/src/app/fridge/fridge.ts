@@ -1,4 +1,4 @@
-import { Component, model, input, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
@@ -9,10 +9,10 @@ import { CategoryLoader, Category } from '../services/category-loader';
 @Component({
 	selector: 'app-fridge',
 	imports: [
-		DatePipe, 
-		MatTableModule, 
-		MatInputModule, 
-		MatFormFieldModule, 
+		DatePipe,
+		MatTableModule,
+		MatInputModule,
+		MatFormFieldModule,
 	],
 	templateUrl: './fridge.html',
 	styleUrl: './fridge.css',
