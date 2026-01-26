@@ -1,8 +1,17 @@
 import { Injectable } from '@angular/core';
 
+export interface ExpiryDuration {
+	days: number;
+	months: number;
+	years: number;
+}
+
 export interface Category {
   name: string;
   unit: string;
+  aliases: string[];
+  defautExpiryDuration: ExpiryDuration | undefined;
+  defautExpiryDurationAfterOpening: ExpiryDuration | undefined;
 }
 
 @Injectable({
