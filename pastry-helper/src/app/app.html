@@ -17,6 +17,12 @@
 					<span matListItemTitle>Fridge</span>
 				}
 			</a>
+			<a mat-list-item routerLink="categories">
+				<mat-icon matListItemIcon>category</mat-icon>
+				@if (!(isHandset$ | async )) {
+					<span matListItemTitle>Categories</span>
+				}
+			</a>
 		</mat-nav-list>
 	</mat-sidenav>
 	<mat-sidenav-content>
