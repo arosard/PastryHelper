@@ -1,0 +1,14 @@
+mat-toolbar {
+	app-region: drag;
+	text-align: center;
+	display: grid;
+}
+
+.sidenav-container {
+	height: 100%;
+}
+
+.sidenav {
+	app-region: no-drag;
+	width: fit-content;
+}

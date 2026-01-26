@@ -1,4 +1,20 @@
 <main>
-    <app-fridge></app-fridge>
+	<mat-toolbar>
+		<span>PastryHelper</span>
+	</mat-toolbar>
+	<mat-sidenav-container class="sidenav-container">
+	<mat-sidenav #sidenav class="sidenav" fixedInViewport [fixedTopGap]="47" [mode]="'side'" opened>
+		<mat-nav-list role="list">
+			<a mat-list-item routerLink="fridge">
+				<mat-icon matListItemIcon>kitchen</mat-icon>
+				@if (!(isHandset$ | async )) {
+					<span matListItemTitle>Fridge</span>
+				}
+			</a>
+		</mat-nav-list>
+	</mat-sidenav>
+	<mat-sidenav-content>
+		<router-outlet></router-outlet>
+	</mat-sidenav-content>
+</mat-sidenav-container>
 </main>
-<router-outlet />
