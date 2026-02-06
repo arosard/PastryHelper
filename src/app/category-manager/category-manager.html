@@ -16,13 +16,13 @@
         <th mat-header-cell *matHeaderCellDef> Aliases </th>
         <td mat-cell *matCellDef="let item"> {{ item.aliases.join(', ') }} </td>
     </ng-container>
-    <ng-container matColumnDef="defautExpiryDuration">
+    <ng-container matColumnDef="defaultExpiryDuration">
         <th mat-header-cell *matHeaderCellDef> Default Expiry Duration (days) </th>
-        <td mat-cell *matCellDef="let item"> {{ item.defautExpiryDuration }} </td>
+        <td mat-cell *matCellDef="let item"> {{ item.defaultExpiryDuration }} </td>
     </ng-container>
-    <ng-container matColumnDef="defautExpiryDurationAfterOpening">
+    <ng-container matColumnDef="defaultExpiryDurationAfterOpening">
         <th mat-header-cell *matHeaderCellDef> Default Expiry Duration After Opening (days) </th>
-        <td mat-cell *matCellDef="let item"> {{ item.defautExpiryDurationAfterOpening }} </td>
+        <td mat-cell *matCellDef="let item"> {{ item.defaultExpiryDurationAfterOpening }} </td>
     </ng-container>
 	<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 	<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

@@ -18,7 +18,7 @@ export class CategoryManager {
 	readonly categoryLoader = inject(CategoryLoader);
 	categories = new MatTableDataSource<Category>([]);
 
-	displayedColumns: string[] = ['name', 'unit', 'aliases', 'defautExpiryDuration', 'defautExpiryDurationAfterOpening'];
+	displayedColumns: string[] = ['name', 'unit', 'aliases', 'defaultExpiryDuration', 'defaultExpiryDurationAfterOpening'];
 
 	ngOnInit() {
 		this.categoryLoader.loadCategories().then((items) => {

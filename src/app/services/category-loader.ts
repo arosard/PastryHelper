@@ -10,8 +10,8 @@ export interface Category {
   name: string;
   unit: string;
   aliases: string[];
-  defautExpiryDuration: ExpiryDuration | undefined;
-  defautExpiryDurationAfterOpening: ExpiryDuration | undefined;
+  defaultExpiryDuration: ExpiryDuration | undefined;
+  defaultExpiryDurationAfterOpening: ExpiryDuration | undefined;
 }
 
 @Injectable({
