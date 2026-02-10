@@ -1,7 +1,13 @@
-mat-toolbar {
+.top-bar {
 	app-region: drag;
-	text-align: center;
-	display: grid;
+	display: inline-flex;
+	height: 43px;
+	width: 100%;
+}
+
+.top-bar-title {
+	font-size: 2rem;
+	margin: auto;
 }
 
 .sidenav-container {

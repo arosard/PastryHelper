@@ -35,9 +35,3 @@ body {
   margin: 0;
   height: 100%;
 }
-
-:root {
-  @include mat.toolbar-overrides((
-    standard-height: 43px,
-  ));
-}

@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -20,7 +19,6 @@ import { map, shareReplay } from 'rxjs/operators';
 		MatIconModule,
 		MatListModule,
 		MatSidenavModule,
-		MatToolbarModule,
 	],
 	templateUrl: './app.html',
 	styleUrl: './app.css'
