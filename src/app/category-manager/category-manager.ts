@@ -58,7 +58,7 @@ export class CategoryManager {
 			};
 		
 		const dialogRef = this.dialog.open(CategoryDialog, {
-			data: { ...category }, // Pass a copy of the category to avoid direct mutations
+			data: { ...category },
 		});
 
 		dialogRef.afterClosed().subscribe((result: Category) => {
