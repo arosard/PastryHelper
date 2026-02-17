@@ -1,0 +1,72 @@
+<h2 mat-dialog-title>Edit category characteristics</h2>
+<mat-dialog-content>
+  <div class="form-content">
+    <mat-form-field>
+      <mat-label>Category Name</mat-label>
+      <input matInput type="text" [(ngModel)]="name" required/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Unit</mat-label>
+      <mat-select matNativeControl [(ngModel)]="unit" required>
+        <mat-option value="g/kg">g/kg</mat-option>
+        <mat-option value="ml/L">ml/L</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Aliases (comma separated)</mat-label>
+      <input matInput type="text" [(ngModel)]="aliases" />
+    </mat-form-field>
+    <mat-checkbox [(ngModel)]="cannotExpire">
+      cannot expire
+    </mat-checkbox>
+    @if (!cannotExpire) {
+      <mat-button-toggle-group name="expiryDurationUnit" aria-label="Expiry Duration Unit" [(ngModel)]="expiryDurationUnit">
+        <mat-button-toggle value="days">Days</mat-button-toggle>
+        <mat-button-toggle value="months">Months</mat-button-toggle>
+        <mat-button-toggle value="years">Years</mat-button-toggle>
+      </mat-button-toggle-group>
+      <mat-form-field>
+        <mat-label>Default Expiry Duration ({{ expiryDurationUnit }})</mat-label>
+      @switch (expiryDurationUnit) {
+        @case ('days') {
+            <input matInput type="number" min="0" [(ngModel)]="defaultExpiryDurationDays" placeholder="Days" required/>
+        }
+        @case ('months') {
+            <input matInput type="number" min="0" [(ngModel)]="defaultExpiryDurationMonths" placeholder="Months" required/>
+        }
+        @case ('years') {
+            <input matInput type="number" min="0" [(ngModel)]="defaultExpiryDurationYears" placeholder="Years" required/>
+        }
+      }
+    </mat-form-field>
+    }
+    <mat-checkbox [(ngModel)]="cannotExpireAfterOpening">
+      cannot expire after opening
+    </mat-checkbox>
+    @if (!cannotExpireAfterOpening) {
+      <mat-button-toggle-group name="expiryDurationAfterOpeningUnit" aria-label="Expiry Duration After Opening Unit" [(ngModel)]="expiryDurationAfterOpeningUnit">
+        <mat-button-toggle value="days">Days</mat-button-toggle>
+        <mat-button-toggle value="months">Months</mat-button-toggle>
+        <mat-button-toggle value="years">Years</mat-button-toggle>
+      </mat-button-toggle-group>
+      <mat-form-field>
+        <mat-label>Default Expiry Duration After Opening ({{ expiryDurationAfterOpeningUnit }})</mat-label>
+      @switch (expiryDurationAfterOpeningUnit) {
+        @case ('days') {
+            <input matInput type="number" min="0" [(ngModel)]="defaultExpiryDurationAfterOpeningDays" placeholder="Days" required/>
+        }
+        @case ('months') {
+            <input matInput type="number" min="0" [(ngModel)]="defaultExpiryDurationAfterOpeningMonths" placeholder="Months" required/>
+        }
+        @case ('years') {
+            <input matInput type="number" min="0" [(ngModel)]="defaultExpiryDurationAfterOpeningYears" placeholder="Years" required/>
+          }
+        }
+      </mat-form-field>
+    }
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton (click)="quit()">No Thanks</button>
+  <button matButton [mat-dialog-close]="save()" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>

@@ -8,7 +8,7 @@ export interface ExpiryDuration {
 
 export interface Category {
   name: string;
-  unit: string;
+  unit: "ml/L" | "g/kg";
   aliases: string[];
   defaultExpiryDuration: ExpiryDuration | undefined;
   defaultExpiryDurationAfterOpening: ExpiryDuration | undefined;

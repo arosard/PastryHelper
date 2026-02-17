@@ -5,6 +5,7 @@ export interface FridgeItem {
 	name: string;
 	quantity: number;
 	expiryDate: Date;
+	opened: boolean;
 }
 
 @Injectable({
