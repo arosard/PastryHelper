@@ -18,20 +18,41 @@ export interface Category {
 	providedIn: 'root',
 })
 export class CategoryLoader {
-	async loadCategories(): Promise<Category[]> {
-		if (!window) {
-			console.error("[CategoryLoader.loadCategories] Window object is not available.");
-			return [];
-		}
-		let content = await window.categoryApi.loadCategories();
-		return content as Category[];
+	private categories: Category[] = [];
+
+	constructor() {
+		this.init();
 	}
 
-	async saveCategories(items: Category[]): Promise<void> {
+	init() {
+		this.loadCategoriesFromFile();
+	}
+
+	loadCategories(): Category[] {
+		return this.categories;
+	}
+
+	saveCategories(categories: Category[]) {
+		this.categories = categories;
+		this.saveCategoriesToFile();
+	}
+
+	private async loadCategoriesFromFile() {
+		if (!window) {
+			console.error("[CategoryLoader.loadCategories] Window object is not available.");
+			return;
+		}
+		console.log("Loading categories...");
+		const content = await window.categoryApi.loadCategories();
+		console.log("Categories loaded from file");
+		this.categories = content || [];
+	}
+
+	private async saveCategoriesToFile(): Promise<void> {
 		if (!window) {
 			console.error("[CategoryLoader.saveCategories] Window object is not available.");
 			return;
 		}
-		await window.categoryApi.saveCategories(items);
+		await window.categoryApi.saveCategories(this.categories);
 	}
 }

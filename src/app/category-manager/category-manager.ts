@@ -27,7 +27,7 @@ export class CategoryManager {
 	readonly categoryLoader = inject(CategoryLoader);
 	readonly foodLoader = inject(FoodLoader);
 	readonly dialog = inject(MatDialog);
-	categories = new MatTableDataSource<Category>([]);
+	categories = new MatTableDataSource<Category>(this.categoryLoader.loadCategories());
 
 	displayedColumns: string[] = [
 		'name', 
@@ -37,14 +37,6 @@ export class CategoryManager {
 		'defaultExpiryDurationAfterOpening',
 		'actions',
 	];
-
-	ngOnInit() {
-		this.categoryLoader.loadCategories().then((items) => {
-			this.categories.data = items;
-		}).catch((err) => {
-			console.error("[CategoryManager.ngOnInit] Error loading categories:", err);
-		});
-	}
 
 	openDialog(categoryIndex?: number) {
 		const category: Category = categoryIndex !== undefined 
@@ -73,9 +65,7 @@ export class CategoryManager {
 			}
 
 			this.categories._updateChangeSubscription();
-			this.categoryLoader.saveCategories(this.categories.data).catch((err) => {
-				console.error("[CategoryManager.openDialog] Error saving categories:", err);
-			});
+			this.categoryLoader.saveCategories(this.categories.data);
 		});
 	}
 
@@ -108,25 +98,20 @@ export class CategoryManager {
 	}
 
 	deleteCategory(categoryIndex: number) {
-		this.foodLoader.loadFridgeItems().then((items: FridgeItem[]) => {
-			const categoryName = this.categories.data[categoryIndex].name;
-			const itemsFromCategory = items.filter(item => item.category.toLowerCase() === categoryName.toLowerCase());
-			if (itemsFromCategory.length > 0) {
-				let errorMessage = `Cannot delete category "${categoryName}" because it is still used by some fridge items:\n`;
-				for (const item of itemsFromCategory) {
-					 errorMessage += `- ${item.name}\n`;
-				}
-				alert(errorMessage);
-				return;
+		const items = this.foodLoader.loadFridgeItems()
+		const categoryName = this.categories.data[categoryIndex].name;
+		const itemsFromCategory = items.filter(item => item.category.toLowerCase() === categoryName.toLowerCase());
+		if (itemsFromCategory.length > 0) {
+			let errorMessage = `Cannot delete category "${categoryName}" because it is still used by some fridge items:\n`;
+			for (const item of itemsFromCategory) {
+				errorMessage += `- ${item.name}\n`;
 			}
-			this.categories.data.splice(categoryIndex, 1);
-			this.categories._updateChangeSubscription();
-			this.categoryLoader.saveCategories(this.categories.data).catch((err) => {
-				console.error("[CategoryManager.deleteCategory] Error saving categories:", err);
-			});
-		}).catch((err) => {
-			console.error("[CategoryManager.deleteCategory] Error checking before deleting category:", err);
-		});
+			alert(errorMessage);
+			return;
+		}
+		this.categories.data.splice(categoryIndex, 1);
+		this.categories._updateChangeSubscription();
+		this.categoryLoader.saveCategories(this.categories.data);
 	}
 
 	applyFilter(event: Event) {

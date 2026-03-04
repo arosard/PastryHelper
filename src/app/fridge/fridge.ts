@@ -1,10 +1,9 @@
+import { CategoryLoader, Category } from '../services/category-loader';
 import { Component, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { FoodLoader, FridgeItem } from '../services/food-loader';
-import { CategoryLoader, Category } from '../services/category-loader';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+
 
 @Component({
 	selector: 'app-fridge',
@@ -20,8 +19,8 @@ import { CategoryLoader, Category } from '../services/category-loader';
 export class Fridge {
 	readonly foodLoader = inject(FoodLoader);
 	readonly categoryLoader = inject(CategoryLoader);
-	fridgeItems = new MatTableDataSource<FridgeItem>([]);
-	categories: Category[] = [];
+	fridgeItems = new MatTableDataSource<FridgeItem>(this.foodLoader.loadFridgeItems());
+	categories: Category[] = this.categoryLoader.loadCategories();
 
 	displayedColumns: string[] = ['category', 'name', 'quantity', 'expiryDate'];
 
