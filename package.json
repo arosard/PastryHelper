@@ -43,10 +43,13 @@
     "@angular/cli": "^21.1.0",
     "@angular/compiler-cli": "^21.1.0",
     "@angular/material": "^21.1.0",
+    "@jest/globals": "^30.2.0",
     "@types/node": "^20.17.19",
     "electron": "^40.0.0",
     "electron-builder": "^26.4.0",
+    "jest": "^30.2.0",
     "jsdom": "^27.1.0",
+    "ts-jest": "^29.4.6",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
   }
