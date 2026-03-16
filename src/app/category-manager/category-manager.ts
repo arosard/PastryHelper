@@ -1,7 +1,7 @@
 import { CategoryDialog } from '../category-dialog/category-dialog';
 import { CategoryLoader, Category } from '../services/category-loader';
 import { Component, inject } from '@angular/core';
-import { FoodLoader, FridgeItem } from '../services/food-loader';
+import { FoodLoader } from '../services/food-loader';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
