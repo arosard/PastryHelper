@@ -2,6 +2,7 @@ import { CategoryDialog } from '../category-dialog/category-dialog';
 import { CategoryLoader, Category } from '../services/category-loader';
 import { Component, inject } from '@angular/core';
 import { FoodLoader } from '../services/food-loader';
+import { limitedDistanceDamerauLevenshteinSubstrings } from '../misc/damerauLevenshtein';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -37,6 +38,23 @@ export class CategoryManager {
 		'defaultExpiryDurationAfterOpening',
 		'actions',
 	];
+
+	ngOnInit() {
+			this.categories.filterPredicate = this.categoryFilterPredicate;
+		}
+	
+	categoryFilterPredicate(item: Category, filter: string): boolean {
+		const filterLower = filter.trim().toLowerCase();
+		const damerauLevenshteinDistanceLimit = 1;
+
+		if (item.name.length + damerauLevenshteinDistanceLimit >= filterLower.length
+			&& limitedDistanceDamerauLevenshteinSubstrings(filterLower, item.name.toLowerCase(), damerauLevenshteinDistanceLimit)
+		) {
+			return true;
+		}
+
+		return false;
+	}
 
 	openDialog(categoryIndex?: number) {
 		const category: Category = categoryIndex !== undefined 
