@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FoodLoader, FridgeItem } from '../services/food-loader';
 import { FridgeDialog } from '../fridge-dialog/fridge-dialog';
+import { limitedDistanceDamerauLevenshteinSubstrings } from '../misc/damerauLevenshtein';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -34,6 +35,29 @@ export class Fridge {
 	categories: Category[] = this.categoryLoader.loadCategories();
 
 	displayedColumns: string[] = ['category', 'name', 'quantity', 'expiryDate', 'actions'];
+
+	ngOnInit() {
+		this.fridgeItems.filterPredicate = this.fridgeFilterPredicate;
+	}
+
+	fridgeFilterPredicate(item: FridgeItem, filter: string): boolean {
+		const filterLower = filter.trim().toLowerCase();
+		const damerauLevenshteinDistanceLimit = 1;
+
+		if (item.name.length + damerauLevenshteinDistanceLimit >= filterLower.length
+			&& limitedDistanceDamerauLevenshteinSubstrings(filterLower, item.name.toLowerCase(), damerauLevenshteinDistanceLimit)
+		) {
+			return true;
+		}
+
+		if (item.category.length + damerauLevenshteinDistanceLimit >= filterLower.length
+			&& limitedDistanceDamerauLevenshteinSubstrings(filterLower, item.category.toLowerCase(), damerauLevenshteinDistanceLimit)
+		) {
+			return true;
+		}
+
+		return false;
+	}
 
 	openDialog(fridgeItemIndex?: number) {
 		const fridgeItem: FridgeItem = fridgeItemIndex !== undefined 
