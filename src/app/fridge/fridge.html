@@ -23,7 +23,16 @@
 	</ng-container>
 	<ng-container matColumnDef="expiryDate">
 		<th mat-header-cell *matHeaderCellDef> Expiry Date </th>
-		<td mat-cell *matCellDef="let item"> {{ item.expiryDate | date:'shortDate' }} </td>
+		<td mat-cell *matCellDef="let item" [class.expired-border]="isExpired(item)" [class.expiring-soon-border]="isExpiringSoon(item)">
+			<span class="expiry-date">
+				{{ item.expiryDate | date:'shortDate' }}
+				@if (isExpired(item)) {
+					<mat-icon class="expired">dangerous</mat-icon>
+				} @else if (isExpiringSoon(item)) {
+					<mat-icon class="expiring-soon">warning_amber</mat-icon>
+				}
+			</span>
+		</td>
 	</ng-container>
 	<ng-container matColumnDef="actions">
 		<th mat-header-cell *matHeaderCellDef> Actions </th>

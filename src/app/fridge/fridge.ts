@@ -133,4 +133,20 @@ export class Fridge {
 		const filterValue = (event.target as HTMLInputElement).value;
 		this.fridgeItems.filter = filterValue.trim().toLowerCase();
 	}
+
+	isExpiringSoon(row: FridgeItem): boolean {
+		const today = new Date();
+		const inOneMonth = new Date();
+		inOneMonth.setMonth(inOneMonth.getMonth() + 1);
+		const expiryDate = new Date(row.expiryDate);
+
+		return expiryDate.getTime() >= today.getTime() && expiryDate.getTime() <= inOneMonth.getTime();
+	}
+
+	isExpired(row: FridgeItem): boolean {
+		const today = new Date();
+		const expiryDate = new Date(row.expiryDate);
+
+		return expiryDate.getTime() < today.getTime();
+	}
 }
